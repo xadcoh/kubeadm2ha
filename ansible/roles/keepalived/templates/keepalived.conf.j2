@@ -4,9 +4,9 @@ global_defs {
 }
 vrrp_script check_apiserver {
   script "/etc/keepalived/check_apiserver.sh"
-  interval 3
-  weight -2
-  fall 10
+  interval 2
+  weight -5
+  fall 3
   rise 2
 }
 
@@ -19,10 +19,12 @@ vrrp_instance VI_1 {
     interface {{ ansible_default_ipv4.interface }}
     virtual_router_id 51
 {% if 'primary-master' in group_names %}
-    priority 101
+    priority 102
 {% else %}
     priority 100
 {% endif %}
+    advert_int 2
+    mcast_src_ip {{ ansible_default_ipv4.address }}
     authentication {
         auth_type PASS
         auth_pass 4be37dc3b4c90194d1600c483e10ad1d
