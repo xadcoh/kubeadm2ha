@@ -2,6 +2,10 @@
 # Sets up etcd on the masters.
 #
 ---
+# maybe curl instead??
+- name: Install wget
+  package: name=wget state=present
+
 - name: Get cfssl
   local_action: "command wget --continue -O /tmp/cfssl https://pkg.cfssl.org/R1.2/cfssl_linux-{{ HOST_ARCH }}"
   run_once: true
